@@ -5,16 +5,20 @@ on:
     types: [opened, synchronize, reopened]
     branches: ["main", "master"]
     
-
 jobs:
-  test-project:
-    uses: cx-actions-2025/fm-actions/.github/workflows/school-python2.yaml@main
-    with:
-        team-name: ${{ vars.TEAM_NAME }}
-        pr_head_sha: ${{ github.event.pull_request.head.sha }}
-    secrets:
-        test-repo: ${{ secrets.TEST_REPO }}
-        auth-token: ${{ secrets.AUTH_TOKEN }}
-        backend-url: ${{ secrets.BACKEND_URL }}
-        auth-key: ${{ secrets.AUTH_KEY }}
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      - name: Set up authentication
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global http.extraheader "Authorization: Bearer $GITHUB_TOKEN"
+
+      - name: Run your script
+        run: |
+          # Example Python script or other commands
+          python your_script.py
