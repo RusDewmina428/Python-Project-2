@@ -295,11 +295,16 @@ def main_game():
             
             # Check if the player has no shield left
             if player.shield <= 0:
-                # player.lives -= 1
+                # Decrease player lives
+                player.lives -= 1
+                
+                # If no lives are left, end the game
+                if player.lives <= 0:
+                    game_over = True
+                
+                # Reset shield and hide player temporarily
                 player.shield = 100
                 player.hide()
-                if player.lives == 0:
-                    game_over = True
         
         # Check player-powerup collisions
         hits = pygame.sprite.spritecollide(player, powerups, True)
@@ -311,10 +316,13 @@ def main_game():
             if hit.type == 'power':
                 player.powerup()
         
-        # If game over, stop the game loop
         if game_over:
-            pass
-            
+            screen.fill(BLACK)
+            draw_text(screen, "GAME OVER", 50, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+            pygame.display.flip()
+            pygame.time.wait(3000)  # Wait for 3 seconds before closing the game
+            running = False  # Exit the game loop
+
         # Draw / render
         screen.fill(BLACK)
         all_sprites.draw(screen)
@@ -323,9 +331,6 @@ def main_game():
         draw_text(screen, str(score), 18, SCREEN_WIDTH / 2, 10)
         draw_shield_bar(screen, 5, 5, player.shield)
         draw_lives(screen, SCREEN_WIDTH - 100, 5, player.lives, player_mini_img)
-        
-        # Draw power level
-        draw_text(screen, f"Power: {player.power_level}", 18, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 40)
         
         # Flip the display
         pygame.display.flip()
