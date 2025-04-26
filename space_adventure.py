@@ -293,9 +293,9 @@ def main_game():
             all_sprites.add(new_enemy)
             enemies.add(new_enemy)
             if player.shield <= 0:
-                # player.lives -= 1
                 player.shield = 100
                 player.hide()
+                player.lives -= 1
                 if player.lives == 0:
                     game_over = True
         
@@ -309,9 +309,13 @@ def main_game():
             if hit.type == 'power':
                 player.powerup()
         
+        # If game over, stop the game loop
         if game_over:
-            pass
-            
+            draw_text(screen, "GAME OVER", 64, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3)
+            pygame.display.flip()
+            pygame.time.wait(2000)
+            break
+        
         # Draw / render
         screen.fill(BLACK)
         all_sprites.draw(screen)
@@ -320,6 +324,9 @@ def main_game():
         draw_text(screen, str(score), 18, SCREEN_WIDTH / 2, 10)
         draw_shield_bar(screen, 5, 5, player.shield)
         draw_lives(screen, SCREEN_WIDTH - 100, 5, player.lives, player_mini_img)
+        
+        # Draw power level
+        draw_text(screen, f"Power: {player.power_level}", 18, SCREEN_WIDTH // 2, SCREEN_HEIGHT - 40)
         
         # Flip the display
         pygame.display.flip()
