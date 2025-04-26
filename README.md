@@ -102,7 +102,7 @@ If you don’t see the power-up effects or icons as shown, there may be somethin
 Help us improve Galaxy Invaders!
 1.  Play the game thoroughly to identify behavior that doesn't match the feature descriptions or seems incorrect (e.g., issues with scoring, lives, shields, power-ups, enemy patterns, game state). Check GitHub Issues for known bugs.
 2.  Debug and correct the Python code, primarily within `space_adventure.py`, to align the game with the intended mechanics.
-3.  Commit your fixes and submit them via Pull Requests (PRs) to the main repository.
+3.  Commit your fixes and submit them via Pull Requests (PRs) to the mai python space_adventure.pyn repository.
 4.  **Focus on logical fixes.** Ensure your code is readable and adheres to good practices. Avoid unnecessary structural changes that might disrupt existing functionality or tests.
 
 *(Note: Potential areas needing attention include calculation errors, condition logic, power-up effects, or game state transitions. Exploring the code and gameplay is the best way to find these.)*
