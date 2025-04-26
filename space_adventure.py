@@ -56,7 +56,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = player_img
         self.rect = self.image.get_rect()
-        self.rect.centerx = SCREEN_WIDTH // 2.1 
+        self.rect.centerx = SCREEN_WIDTH // 2.1
         self.rect.bottom = SCREEN_HEIGHT - 10
         self.speed_x = 0
         self.shield = 100
@@ -292,12 +292,19 @@ def main_game():
             new_enemy = Enemy()
             all_sprites.add(new_enemy)
             enemies.add(new_enemy)
+            
+            # Check if the player has no shield left
             if player.shield <= 0:
-                # player.lives -= 1
+                # Decrease player lives
+                player.lives -= 1
+                
+                # If no lives are left, end the game
+                if player.lives <= 0:
+                    game_over = True
+                
+                # Reset shield and hide player temporarily
                 player.shield = 100
                 player.hide()
-                if player.lives == 0:
-                    game_over = True
         
         # Check player-powerup collisions
         hits = pygame.sprite.spritecollide(player, powerups, True)
@@ -310,8 +317,12 @@ def main_game():
                 player.powerup()
         
         if game_over:
-            pass
-            
+            screen.fill(BLACK)
+            draw_text(screen, "GAME OVER", 50, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+            pygame.display.flip()
+            pygame.time.wait(3000)  # Wait for 3 seconds before closing the game
+            running = False  # Exit the game loop
+
         # Draw / render
         screen.fill(BLACK)
         all_sprites.draw(screen)
